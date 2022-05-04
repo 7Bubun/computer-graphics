@@ -4,7 +4,7 @@ package mainPackage;
 import java.awt.Point;
 
 public class Point3D {
-    private final static int D = 30;
+    private final static int D = 140;
     private int x;
     private int y;
     private int z;
