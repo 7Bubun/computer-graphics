@@ -4,7 +4,7 @@ package mainPackage;
 import java.awt.Point;
 
 public class Point3D {
-    private final static int D = 140;
+    private final static int D = 100;
     private int x;
     private int y;
     private int z;
@@ -16,8 +16,8 @@ public class Point3D {
     }
 
     public Point convertTo2DAndCenter() {
-        return new Point((x * D) / (z + D) + Config.DISPLAY_WIDTH / 2,
-                (y * D) / (z + D) + Config.DISPLAY_HEIGHT / 2);
+        return new Point((x * D) / z + Config.DISPLAY_WIDTH / 2,
+                (y * D) / z + Config.DISPLAY_HEIGHT / 2);
     }
 
     public void translate(int tx, int ty, int tz) {
