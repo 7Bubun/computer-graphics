@@ -1,6 +1,8 @@
 package mainPackage;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -10,15 +12,7 @@ public class Main {
     public static void main(String[] args) {
         cuboidSet = new CuboidReader().readCuboidsFromTextFile("");
 
-        Frame frame = new Frame();
-        frame.setSize(Config.DISPLAY_WIDTH, Config.DISPLAY_HEIGHT);
-        frame.addWindowListener (new WindowAdapter() {
-            public void windowClosing (WindowEvent e) {
-                frame.dispose();
-            }
-        });
-
-        frame.add(new Canvas() {
+        Canvas mainCanvas = new Canvas() {
             {
                 this.setBackground(Color.BLACK);
                 this.setSize(800, 600);
@@ -28,7 +22,7 @@ public class Main {
             public void paint(Graphics g) {
                 g.setColor(Color.white);
 
-                for(Cuboid c : cuboidSet.getCuboids()) {
+                for (Cuboid c : cuboidSet.getCuboids()) {
                     Point[] points = c.getVertexesConvertedTo2D();
 
                     g.drawLine(points[0].x, points[0].y, points[1].x, points[1].y);
@@ -47,8 +41,42 @@ public class Main {
                     g.drawLine(points[3].x, points[3].y, points[7].x, points[7].y);
                 }
             }
+        };
+
+        Frame frame = new Frame();
+        frame.setSize(Config.DISPLAY_WIDTH, Config.DISPLAY_HEIGHT);
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                frame.dispose();
+            }
         });
 
+        frame.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                switch (e.getKeyCode()) {
+                    case KeyEvent.VK_W -> cuboidSet.translate(0, 10, 0);
+                    case KeyEvent.VK_A -> cuboidSet.translate(10, 0, 0);
+                    case KeyEvent.VK_S -> cuboidSet.translate(0, -10, 0);
+                    case KeyEvent.VK_D -> cuboidSet.translate(-10, 0, 0);
+                    case KeyEvent.VK_Q -> cuboidSet.translate(0, 0, 10);
+                    case KeyEvent.VK_E -> cuboidSet.translate(0, 0, -10);
+                }
+
+                mainCanvas.repaint();
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
+
+        frame.add(mainCanvas);
         frame.setVisible(true);
     }
 }

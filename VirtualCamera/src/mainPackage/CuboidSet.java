@@ -14,8 +14,10 @@ public class CuboidSet {
         cuboids.add(c);
     }
 
-    public void Translate() {
-        //TODO
+    public void translate(int tx, int ty, int tz) {
+        for (Cuboid c : cuboids) {
+            c.translate(tx, ty, tz);
+        }
     }
 
     public void Rotate() {

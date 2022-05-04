@@ -20,15 +20,17 @@ public class Point3D {
                 (y * D) / (z + D) + Config.DISPLAY_HEIGHT / 2);
     }
 
-    public void Translate() {
+    public void translate(int tx, int ty, int tz) {
+        x += tx;
+        y += ty;
+        z += tz;
+    }
+
+    public void rotate() {
         //TODO
     }
 
-    public void Rotate() {
-        //TODO
-    }
-
-    public void Zoom() {
+    public void zoom() {
         //TODO
     }
 }

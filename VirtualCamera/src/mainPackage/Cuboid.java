@@ -9,8 +9,10 @@ public class Cuboid {
         this.vertexes = vertexes;
     }
 
-    public void Translate() {
-        //TODO
+    public void translate(int tx, int ty, int tz) {
+        for (Point3D v : vertexes) {
+            v.translate(tx, ty, tz);
+        }
     }
 
     public void Rotate() {
@@ -24,7 +26,7 @@ public class Cuboid {
     public Point[] getVertexesConvertedTo2D() {
         Point[] points = new Point[8];
 
-        for(int i = 0; i < 8; i++) {
+        for (int i = 0; i < 8; i++) {
             points[i] = vertexes[i].convertTo2DAndCenter();
         }
 
