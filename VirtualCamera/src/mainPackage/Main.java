@@ -85,6 +85,7 @@ public class Main {
         });
 
         frame.add(mainCanvas);
+        frame.setTitle("Wirtualna Kamera");
         frame.setVisible(true);
     }
 }
