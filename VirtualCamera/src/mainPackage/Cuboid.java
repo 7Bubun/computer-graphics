@@ -1,9 +1,9 @@
 package mainPackage;
 
-import java.awt.*;
+import java.awt.Point;
 
 public class Cuboid {
-    private Point3D[] vertexes;
+    private final Point3D[] vertexes;
 
     public Cuboid(Point3D[] vertexes) {
         this.vertexes = vertexes;
@@ -33,9 +33,5 @@ public class Cuboid {
         }
 
         return points;
-    }
-
-    public Point3D[] getVertexes() {
-        return vertexes;
     }
 }
