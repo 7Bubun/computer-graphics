@@ -20,8 +20,22 @@ public class CuboidSet {
         }
     }
 
-    public void Rotate() {
-        //TODO
+    public void rotateX(double angle) {
+        for (Cuboid c : cuboids) {
+            c.rotateX(angle);
+        }
+    }
+
+    public void rotateY(double angle) {
+        for (Cuboid c : cuboids) {
+            c.rotateY(angle);
+        }
+    }
+
+    public void rotateZ(double angle) {
+        for (Cuboid c : cuboids) {
+            c.rotateZ(angle);
+        }
     }
 
     public void zoom(int zoomValue) {

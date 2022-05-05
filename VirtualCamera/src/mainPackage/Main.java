@@ -61,6 +61,12 @@ public class Main {
                     case KeyEvent.VK_E -> cuboidSet.translate(0, 0, -Config.TRANSLATION_STEP);
                     case KeyEvent.VK_Z -> cuboidSet.zoom(Config.ZOOM_STEP);
                     case KeyEvent.VK_X -> cuboidSet.zoom(-Config.ZOOM_STEP);
+                    case KeyEvent.VK_UP -> cuboidSet.rotateX(-Config.ROTATE_STEP);
+                    case KeyEvent.VK_DOWN -> cuboidSet.rotateX(Config.ROTATE_STEP);
+                    case KeyEvent.VK_LEFT -> cuboidSet.rotateY(Config.ROTATE_STEP);
+                    case KeyEvent.VK_RIGHT -> cuboidSet.rotateY(-Config.ROTATE_STEP);
+                    case KeyEvent.VK_C -> cuboidSet.rotateZ(-Config.ROTATE_STEP);
+                    case KeyEvent.VK_V -> cuboidSet.rotateZ(Config.ROTATE_STEP);
                 }
 
                 mainCanvas.repaint();

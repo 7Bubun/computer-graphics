@@ -15,8 +15,22 @@ public class Cuboid {
         }
     }
 
-    public void Rotate() {
-        //TODO
+    public void rotateX(double angle) {
+        for (Point3D v : vertexes) {
+            v.rotateX(angle);
+        }
+    }
+
+    public void rotateY(double angle) {
+        for (Point3D v : vertexes) {
+            v.rotateY(angle);
+        }
+    }
+
+    public void rotateZ(double angle) {
+        for (Point3D v : vertexes) {
+            v.rotateZ(angle);
+        }
     }
 
     public void zoom(int zoomValue) {
