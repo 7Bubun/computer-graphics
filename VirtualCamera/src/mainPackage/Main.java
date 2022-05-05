@@ -39,7 +39,7 @@ public class Main {
     private static CuboidSet cuboidSet;
 
     public static void main(String[] args) {
-        cuboidSet = new CuboidReader().readCuboidsFromTextFile("");
+        cuboidSet = new CuboidReader().readCuboidsFromTextFile("data.txt");
         Canvas mainCanvas = new MainCanvas();
         Frame frame = new Frame();
 

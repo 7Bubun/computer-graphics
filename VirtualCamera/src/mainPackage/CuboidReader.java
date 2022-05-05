@@ -1,62 +1,39 @@
 package mainPackage;
 
 
+import java.io.BufferedReader;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+
+
 public class CuboidReader {
 
     public CuboidSet readCuboidsFromTextFile(String path) {
-        //TODO: replace mock with reading from text file
         CuboidSet cuboidSet = new CuboidSet();
-        Cuboid cuboid = new Cuboid(new Point3D[]{
-                new Point3D(-200, 100, 250),
-                new Point3D(-100, 100, 250),
-                new Point3D(-100, 100, 300),
-                new Point3D(-200, 100, 300),
-                new Point3D(-200, -200, 250),
-                new Point3D(-100, -200, 250),
-                new Point3D(-100, -200, 300),
-                new Point3D(-200, -200, 300),
-        });
 
-        cuboidSet.addCuboid(cuboid);
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(path));
 
-        cuboid = new Cuboid(new Point3D[]{
-                new Point3D(-200, 100, 350),
-                new Point3D(-100, 100, 350),
-                new Point3D(-100, 100, 400),
-                new Point3D(-200, 100, 400),
-                new Point3D(-200, -200, 350),
-                new Point3D(-100, -200, 350),
-                new Point3D(-100, -200, 400),
-                new Point3D(-200, -200, 400),
-        });
+            reader.lines().forEach(line -> {
+                Point3D[] points = new Point3D[8];
+                String[] coordStrings = line.split(";");
 
-        cuboidSet.addCuboid(cuboid);
+                for (int i = 0; i < 8; i++) {
+                    String[] singleCoordString = coordStrings[i].split(",");
+                    int x = Integer.parseInt(singleCoordString[0].replace(" ", ""));
+                    int y = Integer.parseInt(singleCoordString[1].replace(" ", ""));
+                    int z = Integer.parseInt(singleCoordString[2].replace(" ", ""));
+                    points[i] = new Point3D(x, y, z);
+                }
 
-        cuboid = new Cuboid(new Point3D[]{
-                new Point3D(150, 100, 250),
-                new Point3D(250, 100, 250),
-                new Point3D(250, 100, 400),
-                new Point3D(150, 100, 400),
-                new Point3D(150, -200, 250),
-                new Point3D(250, -200, 250),
-                new Point3D(250, -200, 400),
-                new Point3D(150, -200, 400),
-        });
+                cuboidSet.addCuboid(new Cuboid(points));
+            });
 
-        cuboidSet.addCuboid(cuboid);
+        } catch (FileNotFoundException e) {
+            System.out.println("Błąd wczytywania danych");
+        }
 
-        cuboid = new Cuboid(new Point3D[]{
-                new Point3D(150, 100, 420),
-                new Point3D(200, 100, 420),
-                new Point3D(200, 100, 450),
-                new Point3D(150, 100, 450),
-                new Point3D(150, -50, 420),
-                new Point3D(200, -50, 420),
-                new Point3D(200, -50, 450),
-                new Point3D(150, -50, 450),
-        });
-
-        cuboidSet.addCuboid(cuboid);
         return cuboidSet;
     }
 }
