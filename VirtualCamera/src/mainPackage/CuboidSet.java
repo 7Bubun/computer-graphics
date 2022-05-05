@@ -24,8 +24,10 @@ public class CuboidSet {
         //TODO
     }
 
-    public void Zoom() {
-        //TODO
+    public void zoom(int zoomValue) {
+        for (Cuboid c : cuboids) {
+            c.zoom(zoomValue);
+        }
     }
 
     public List<Cuboid> getCuboids() {

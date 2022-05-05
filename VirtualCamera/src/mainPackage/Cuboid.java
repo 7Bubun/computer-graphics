@@ -19,8 +19,10 @@ public class Cuboid {
         //TODO
     }
 
-    public void Zoom() {
-        //TODO
+    public void zoom(int zoomValue) {
+        for (Point3D v : vertexes) {
+            v.zoom(zoomValue);
+        }
     }
 
     public Point[] getVertexesConvertedTo2D() {

@@ -60,12 +60,14 @@ public class Main {
             @Override
             public void keyPressed(KeyEvent e) {
                 switch (e.getKeyCode()) {
-                    case KeyEvent.VK_W -> cuboidSet.translate(0, 10, 0);
-                    case KeyEvent.VK_A -> cuboidSet.translate(10, 0, 0);
-                    case KeyEvent.VK_S -> cuboidSet.translate(0, -10, 0);
-                    case KeyEvent.VK_D -> cuboidSet.translate(-10, 0, 0);
-                    case KeyEvent.VK_Q -> cuboidSet.translate(0, 0, 10);
-                    case KeyEvent.VK_E -> cuboidSet.translate(0, 0, -10);
+                    case KeyEvent.VK_W -> cuboidSet.translate(0, Config.TRANSLATION_STEP, 0);
+                    case KeyEvent.VK_A -> cuboidSet.translate(Config.TRANSLATION_STEP, 0, 0);
+                    case KeyEvent.VK_S -> cuboidSet.translate(0, -Config.TRANSLATION_STEP, 0);
+                    case KeyEvent.VK_D -> cuboidSet.translate(-Config.TRANSLATION_STEP, 0, 0);
+                    case KeyEvent.VK_Q -> cuboidSet.translate(0, 0, Config.TRANSLATION_STEP);
+                    case KeyEvent.VK_E -> cuboidSet.translate(0, 0, -Config.TRANSLATION_STEP);
+                    case KeyEvent.VK_Z -> cuboidSet.zoom(Config.ZOOM_STEP);
+                    case KeyEvent.VK_X -> cuboidSet.zoom(-Config.ZOOM_STEP);
                 }
 
                 mainCanvas.repaint();
