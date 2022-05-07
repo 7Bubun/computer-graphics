@@ -10,7 +10,7 @@ public class Point3D {
     private double z;
 
     public Point3D(int x, int y, int z) {
-        this.d = 400;
+        this.d = 480;
         this.x = x;
         this.y = y;
         this.z = z;
