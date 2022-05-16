@@ -1,3 +1,5 @@
+import { calculateEquationOfStraight } from './utilities.js';
+
 class Point {
     constructor(x, y, z) {
         this.x = x;
@@ -19,6 +21,11 @@ class Edge {
             this.maxY = secondPoint.y;
             this.minY = firstPoint.y;
         }
+
+        //y = ax + b
+        const coeffs = calculateEquationOfStraight(firstPoint.x, firstPoint.y, secondPoint.x, secondPoint.y);
+        this.a = coeffs.a;
+        this.b = coeffs.b;
     }
 }
 
