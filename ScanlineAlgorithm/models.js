@@ -1,14 +1,15 @@
 import { calculateEquationOfStraight } from './utilities.js';
 
-class Point {
-    constructor(x, y, z) {
+export class Point {
+    constructor(x, y, z, polygon = null) {
         this.x = x;
         this.y = y;
         this.z = z;
+        this.polygon = polygon;
     }
 }
 
-class Edge {
+export class Edge {
     constructor(firstPoint, secondPoint) {
         this.firstPoint = firstPoint;
         this.secondPoint = secondPoint;
@@ -29,8 +30,13 @@ class Edge {
     }
 }
 
-class Polygon {
-    constructor(arrayOfEdges) {
+export class Polygon {
+    constructor(arrayOfEdges, color) {
         this.arrayOfEdges = arrayOfEdges;
+        this.color = color;
+
+        arrayOfEdges.forEach(element => {
+            element.polygon = this;
+        });
     }
 }
