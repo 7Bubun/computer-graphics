@@ -13,11 +13,11 @@ export class Edge {
     constructor(firstPoint, secondPoint) {
         this.firstPoint = firstPoint;
         this.secondPoint = secondPoint;
-        
-        if(firstPoint.y > secondPoint.y) {
+
+        if (firstPoint.y > secondPoint.y) {
             this.maxY = firstPoint.y;
             this.minY = secondPoint.y;
-        
+
         } else {
             this.maxY = secondPoint.y;
             this.minY = firstPoint.y;
@@ -35,8 +35,34 @@ export class Polygon {
         this.arrayOfEdges = arrayOfEdges;
         this.color = color;
 
-        arrayOfEdges.forEach(element => {
-            element.polygon = this;
+        arrayOfEdges.forEach(edge => {
+            edge.polygon = this;
+            edge.firstPoint.polygon = this;
+            edge.secondPoint.polygon = this;
         });
+    }
+}
+
+export class Section {
+    constructor(point1, point2) {
+        this.point1 = point1;
+        this.point2 = point2;
+
+        if (point1.x > point2.x) {
+            this.maxX = point1.x;
+            this.minX = point2.x;
+
+        } else {
+            this.maxX = point2.x;
+            this.minX = point1.x;
+        }
+    }
+
+    includesPoint(point) {
+        return point == this.point1 || point == this.point2;
+    }
+
+    xIsInRange(x) {
+        return x <= this.maxX && x >= this.minX;
     }
 }
