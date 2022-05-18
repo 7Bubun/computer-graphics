@@ -1,5 +1,6 @@
 import { calculateEquationOfStraight } from './utilities.js';
 
+
 export class Point {
     constructor(x, y, z, polygon = null) {
         this.x = x;
@@ -23,10 +24,16 @@ export class Edge {
             this.minY = firstPoint.y;
         }
 
-        //y = ax + b
-        const coeffs = calculateEquationOfStraight(firstPoint.x, firstPoint.y, secondPoint.x, secondPoint.y);
-        this.a = coeffs.a;
-        this.b = coeffs.b;
+        if (firstPoint.x === secondPoint.x) {
+            this.isVertical = true;
+
+        } else {
+            //y = ax + b
+            const coeffs = calculateEquationOfStraight(firstPoint.x, firstPoint.y, secondPoint.x, secondPoint.y);
+            this.a = coeffs.a;
+            this.b = coeffs.b;
+            this.isVertical = false;
+        }
     }
 }
 
@@ -56,6 +63,11 @@ export class Section {
             this.maxX = point2.x;
             this.minX = point1.x;
         }
+
+        //z = ax + b
+        const coeffs = calculateEquationOfStraight(point1.x, point1.z, point2.x, point2.z);
+        this.aXZ = coeffs.a;
+        this.bXZ = coeffs.b;
     }
 
     includesPoint(point) {
