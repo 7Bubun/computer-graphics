@@ -6,8 +6,8 @@ import { SCREEN_WIDTH, BACKGROUND_COLOR } from "./config.js";
 export function drawLine(graphics, start, end, y, color) {
     graphics.beginPath();
     graphics.strokeStyle = color;
-    graphics.moveTo(Math.round(start), y);
-    graphics.lineTo(Math.round(end), y);
+    graphics.moveTo(Math.round(start), y+0.5);
+    graphics.lineTo(Math.round(end), y+0.5);
     graphics.stroke();
 }
 
