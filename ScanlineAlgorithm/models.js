@@ -35,10 +35,6 @@ export class Edge {
             this.isVertical = false;
         }
     }
-
-    calculateZ(y) {
-        return (this.secondPoint.z - this.firstPoint.z) / (this.secondPoint.y - this.firstPoint.y) * (y - this.firstPoint.y) + this.firstPoint.z;
-    }
 }
 
 export class Polygon {
@@ -80,5 +76,9 @@ export class Section {
 
     xIsInRange(x) {
         return x <= this.maxX && x >= this.minX;
+    }
+
+    calculateZ(y) {
+        return (this.point2.z - this.point1.z) / (this.point2.y - this.point1.y) * (y - this.point1.y) + this.point1.z;
     }
 }

@@ -61,7 +61,8 @@ export function drawLineIncludingMultiplePolygons(currentlyProcessedEdges, y, gr
     drawLine(graphics, 0, intersectionPoints[0].x, y, intersectionPoints[0].polygon);
 
     for (let i = 0; i < intersectionPoints.length - 1; i++) {
-        const consideredSections = sections.filter(section => section.xIsInRange(intersectionPoints[i].x + 1));
+        let x = intersectionPoints[i].x;
+        const consideredSections = sections.filter(section => section.xIsInRange(x + 1));
         let color = '#ffffff';
 
         if (consideredSections.length === 0) {
@@ -74,14 +75,14 @@ export function drawLineIncludingMultiplePolygons(currentlyProcessedEdges, y, gr
             let z = -Infinity
             //consideredSections foreach
             consideredSections.forEach(section => {
-                if (section.point1.z > z) {
+                if (section.calculateZ(y) > z) {
                     color = section.point1.polygon.color;
                     z = section.point1.z;
                 }
             })
         }
 
-        drawLine(graphics, intersectionPoints[i].x, intersectionPoints[i + 1].x, y, color);
+        drawLine(graphics, x, intersectionPoints[i + 1].x, y, color);
     }
 
     drawLine(graphics, intersectionPoints[intersectionPoints.length - 1].x, SCREEN_WIDTH - 1, y, BACKGROUND_COLOR);
