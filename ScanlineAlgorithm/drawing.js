@@ -22,9 +22,11 @@ function calculateIntersectionPoints(currentlyProcessedEdges, y) {
         const xOfIntersection = edge.isVertical ? edge.firstPoint.x : (y - edge.b) / edge.a;
         const p1 = edge.firstPoint;
         const p2 = edge.secondPoint;
-        const coeffsXZ = calculateEquationOfStraight(p1.x, p1.z, p2.x, p2.z);
-        const zOfIntersection = coeffsXZ.a * xOfIntersection + coeffsXZ.b;
+        const coeffsXZ = calculateEquationOfStraight(p1.y, p1.z, p2.y, p2.z);
+        const zOfIntersection = coeffsXZ.a * y + coeffsXZ.b;
         intersectionPoints.push(new Point(xOfIntersection, y, zOfIntersection, edge.polygon));
+        if (edge.polygon.color === "blue")
+            console.log(edge, xOfIntersection, y, zOfIntersection);
     });
 
     return intersectionPoints;
@@ -77,7 +79,7 @@ export function drawLineIncludingMultiplePolygons(currentlyProcessedEdges, y, gr
             consideredSections.forEach(section => {
                 if (section.calculateZ(x) > z) {
                     color = section.point1.polygon.color;
-                    z = section.point1.z;
+                    z = section.calculateZ(x);
                 }
             })
         }
