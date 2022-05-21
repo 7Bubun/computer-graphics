@@ -25,8 +25,6 @@ function calculateIntersectionPoints(currentlyProcessedEdges, y) {
         const coeffsXZ = calculateEquationOfStraight(p1.y, p1.z, p2.y, p2.z);
         const zOfIntersection = coeffsXZ.a * y + coeffsXZ.b;
         intersectionPoints.push(new Point(xOfIntersection, y, zOfIntersection, edge.polygon));
-        if (edge.polygon.color === "blue")
-            console.log(edge, xOfIntersection, y, zOfIntersection);
     });
 
     return intersectionPoints;
