@@ -1,9 +1,10 @@
 import { Point, Edge, Polygon } from "./models.js";
 
 export function loadPolygons(filename) {
-    let A = new Point(20, 20, 0);
-    let B = new Point(250, 250, 0);
-    let C = new Point(230, 280, 0);
+    //TODO: unmock
+    let A = new Point(20, 20, -5);
+    let B = new Point(250, 250, -5);
+    let C = new Point(230, 280, -5);
 
     const polygon = new Polygon(
         [new Edge(A, B), new Edge(B, C), new Edge(C, A)],

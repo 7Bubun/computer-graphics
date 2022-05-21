@@ -71,9 +71,14 @@ export function drawLineIncludingMultiplePolygons(currentlyProcessedEdges, y, gr
             color = consideredSections[0].point1.polygon.color;
 
         } else {
-            //TO DO for Ogóras: sortowanie odcinków (conisederedSections) po współrzędnej zet przecięcia i wybór koloru najbliższego,
-            //wczytywanie danych z pliku, przetestowanie całości
-            color = '#ffffff';
+            let z = -Infinity
+            //consideredSections foreach
+            consideredSections.forEach(section => {
+                if (section.point1.z > z) {
+                    color = section.point1.polygon.color;
+                    z = section.point1.z;
+                }
+            })
         }
 
         drawLine(graphics, intersectionPoints[i].x, intersectionPoints[i + 1].x, y, color);

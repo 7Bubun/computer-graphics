@@ -35,6 +35,10 @@ export class Edge {
             this.isVertical = false;
         }
     }
+
+    calculateZ(y) {
+        return (this.secondPoint.z - this.firstPoint.z) / (this.secondPoint.y - this.firstPoint.y) * (y - this.firstPoint.y) + this.firstPoint.z;
+    }
 }
 
 export class Polygon {
