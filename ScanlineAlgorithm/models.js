@@ -78,7 +78,7 @@ export class Section {
         return x <= this.maxX && x >= this.minX;
     }
 
-    calculateZ(y) {
-        return (this.point2.z - this.point1.z) / (this.point2.y - this.point1.y) * (y - this.point1.y) + this.point1.z;
+    calculateZ(x) {
+        return (this.point2.z - this.point1.z) / (this.point2.x - this.point1.x) * (x - this.point1.x) + this.point1.z;
     }
 }

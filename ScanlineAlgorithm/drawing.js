@@ -75,7 +75,7 @@ export function drawLineIncludingMultiplePolygons(currentlyProcessedEdges, y, gr
             let z = -Infinity
             //consideredSections foreach
             consideredSections.forEach(section => {
-                if (section.calculateZ(y) > z) {
+                if (section.calculateZ(x) > z) {
                     color = section.point1.polygon.color;
                     z = section.point1.z;
                 }
