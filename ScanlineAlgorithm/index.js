@@ -9,7 +9,7 @@ const graphics = canvas.getContext('2d');
 const notProcessedEdges = [];
 const currentlyProcessedEdges = [];
 
-const allPolygons = loadPolygons("polygons.txt")
+const allPolygons = loadPolygons("polygons.json")
 
 allPolygons.forEach(polygon => {
     polygon.arrayOfEdges.forEach(edge => {
