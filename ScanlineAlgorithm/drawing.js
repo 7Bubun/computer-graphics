@@ -26,7 +26,7 @@ function calculateIntersectionPoints(currentlyProcessedEdges, y) {
         const zOfIntersection = coeffsXZ.a * y + coeffsXZ.b;
         intersectionPoints.push(new Point(xOfIntersection, y, zOfIntersection, edge.polygon));
     });
-
+    console.log(intersectionPoints)
     return intersectionPoints;
 }
 
@@ -46,18 +46,26 @@ export function drawLineIncludingMultiplePolygons(currentlyProcessedEdges, y, gr
     const intersectionPoints = calculateIntersectionPoints(currentlyProcessedEdges, y);
     const sections = [];
 
-    for (let i = 0; i < intersectionPoints.length - 1; i++) {
-        for (let j = i + 1; j < intersectionPoints.length; j++) {
-            const firstPoint = intersectionPoints[i];
-            const secondPoint = intersectionPoints[j];
+    intersectionPoints.sort(comparePointsByX);
 
-            if (firstPoint.polygon == secondPoint.polygon) {
-                sections.push(new Section(firstPoint, secondPoint));
-            }
+    let polygons = []
+    for (let i = 0; i < intersectionPoints.length; i++) {
+        if(!polygons.includes(intersectionPoints[i].polygon)){
+            polygons.push(intersectionPoints[i].polygon)
         }
     }
 
-    intersectionPoints.sort(comparePointsByX);
+    console.log(polygons)
+
+    for (let j = 0; j < polygons.length; j++) {
+        let onePolygonPoints = intersectionPoints.filter(point => point.polygon == polygons[j])
+
+        for (let i = 0; i < onePolygonPoints.length; i+=2) {
+            sections.push(new Section(onePolygonPoints[i], onePolygonPoints[i+1]));
+        }
+    }
+
+    console.log(sections)
     drawLine(graphics, 0, intersectionPoints[0].x, y, intersectionPoints[0].polygon);
 
     for (let i = 0; i < intersectionPoints.length - 1; i++) {
