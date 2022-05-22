@@ -6,8 +6,8 @@ import { SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND_COLOR } from "./config.js";
 export function drawLine(graphics, start, end, y, color) {
     graphics.beginPath();
     graphics.strokeStyle = color;
-    graphics.moveTo(Math.round(start), (SCREEN_HEIGHT - y)-0.5);
-    graphics.lineTo(Math.round(end), (SCREEN_HEIGHT - y)-0.5);
+    graphics.moveTo(Math.round(start), (SCREEN_HEIGHT - y) - 0.5);
+    graphics.lineTo(Math.round(end), (SCREEN_HEIGHT - y) - 0.5);
     graphics.stroke();
 }
 
@@ -26,7 +26,7 @@ function calculateIntersectionPoints(currentlyProcessedEdges, y) {
         const zOfIntersection = coeffsXZ.a * y + coeffsXZ.b;
         intersectionPoints.push(new Point(xOfIntersection, y, zOfIntersection, edge.polygon));
     });
-    console.log(intersectionPoints)
+
     return intersectionPoints;
 }
 
@@ -50,22 +50,19 @@ export function drawLineIncludingMultiplePolygons(currentlyProcessedEdges, y, gr
 
     let polygons = []
     for (let i = 0; i < intersectionPoints.length; i++) {
-        if(!polygons.includes(intersectionPoints[i].polygon)){
+        if (!polygons.includes(intersectionPoints[i].polygon)) {
             polygons.push(intersectionPoints[i].polygon)
         }
     }
 
-    console.log(polygons)
-
     for (let j = 0; j < polygons.length; j++) {
         let onePolygonPoints = intersectionPoints.filter(point => point.polygon == polygons[j])
 
-        for (let i = 0; i < onePolygonPoints.length; i+=2) {
-            sections.push(new Section(onePolygonPoints[i], onePolygonPoints[i+1]));
+        for (let i = 0; i < onePolygonPoints.length; i += 2) {
+            sections.push(new Section(onePolygonPoints[i], onePolygonPoints[i + 1]));
         }
     }
 
-    console.log(sections)
     drawLine(graphics, 0, intersectionPoints[0].x, y, intersectionPoints[0].polygon);
 
     for (let i = 0; i < intersectionPoints.length - 1; i++) {
@@ -80,12 +77,14 @@ export function drawLineIncludingMultiplePolygons(currentlyProcessedEdges, y, gr
             color = consideredSections[0].point1.polygon.color;
 
         } else {
-            let z = -Infinity
-            //consideredSections foreach
+            let z = -Infinity;
+
             consideredSections.forEach(section => {
-                if (section.calculateZ(x) > z) {
+                const result = section.calculateZ(x + 1.0);
+
+                if (result > z) {
                     color = section.point1.polygon.color;
-                    z = section.calculateZ(x);
+                    z = result;
                 }
             })
         }

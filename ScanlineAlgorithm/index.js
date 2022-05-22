@@ -1,4 +1,3 @@
-import { Point, Edge, Polygon } from "./models.js";
 import { drawLine, drawLineIncludingOnePolygon, drawLineIncludingMultiplePolygons } from "./drawing.js";
 import { SCREEN_HEIGHT, SCREEN_WIDTH, BACKGROUND_COLOR } from "./config.js";
 import { loadPolygons } from "./loading.js"

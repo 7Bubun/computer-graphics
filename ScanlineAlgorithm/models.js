@@ -79,6 +79,6 @@ export class Section {
     }
 
     calculateZ(x) {
-        return (this.point2.z - this.point1.z) / (this.point2.x - this.point1.x) * (x - this.point1.x) + this.point1.z;
+        return this.aXZ * x + this.bXZ;
     }
 }
