@@ -1,13 +1,13 @@
 import { Point, Section } from "./models.js";
 import { calculateEquationOfStraight } from "./utilities.js";
-import { SCREEN_WIDTH, BACKGROUND_COLOR } from "./config.js";
+import { SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND_COLOR } from "./config.js";
 
 
 export function drawLine(graphics, start, end, y, color) {
     graphics.beginPath();
     graphics.strokeStyle = color;
-    graphics.moveTo(Math.round(start), y+0.5);
-    graphics.lineTo(Math.round(end), y+0.5);
+    graphics.moveTo(Math.round(start), (SCREEN_HEIGHT - y)-0.5);
+    graphics.lineTo(Math.round(end), (SCREEN_HEIGHT - y)-0.5);
     graphics.stroke();
 }
 
