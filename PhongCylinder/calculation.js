@@ -1,4 +1,4 @@
-let PHONG_C = 0.1
+let PHONG_C = 10
 
 export function normalizeVector(vector) {
     let length = Math.sqrt(vector[0]*vector[0] + vector[1]*vector[1] + vector[2]*vector[2])

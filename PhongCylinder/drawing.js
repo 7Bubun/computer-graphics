@@ -11,7 +11,7 @@ let CYLINDER_CENTER_Y = -1.0 //wspolrzedna Y srodka walca
 let PROJECTION_A = -0.5 //wspolczynnik a rownania liniowego prostej rzutu ukosnego y = a*z + y_projekcji
 
 let I_A = 1.0 //natężenie światła otoczenia
-let I_P = 100.0 //natężenie światła źródła
+let I_P = 1000.0 //natężenie światła źródła
 
 function initDrawer(canvas) {
     var c = drawer.canvas = canvas
@@ -117,6 +117,7 @@ function projectionPlaneToCylinderSide(x, y) {
 }
 
 function getSideColor(x, y, params, sideColor) {
+    //TODO dla Kuby
     return hslToString(sideColor)
 }
 
