@@ -13,7 +13,15 @@ let sourceLocation = {
     "y": 3.0,
     "z": -1.0
 }
-let baseColor = "yellow" //kolor podstawy
-let sideColor = "green" //kolor ściany bocznej
+let baseColor = {
+    "h": 60,
+    "s": 100,
+    "l": 50
+} //kolor podstawy
+let sideColor = {
+    "h": 120,
+    "s": 100,
+    "l": 50
+} //kolor ściany bocznej
 
 drawer.drawCylinder(kA, kS, kD, n, sourceLocation, baseColor, sideColor);

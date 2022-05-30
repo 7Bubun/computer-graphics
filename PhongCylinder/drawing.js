@@ -1,3 +1,6 @@
+import { normalizeVector, dis, phongEquation } from "./calculation.js"
+import { applyLightToColor, hslToString } from "./color.js"
+
 let CANVAS_SCALE = 2.0
 let CYLINDER_AXIS_X = 0.0 //wspolrzedne osi walca
 let CYLINDER_AXIS_Z = 2.0 //wspolrzedne osi walca
@@ -6,6 +9,9 @@ let CYLINDER_HALFHEIGHT = 1.0 //polowa wysokosci walca
 let CYLINDER_CENTER_Y = -1.0 //wspolrzedna Y srodka walca
 
 let PROJECTION_A = -0.5 //wspolczynnik a rownania liniowego prostej rzutu ukosnego y = a*z + y_projekcji
+
+let I_A = 1.0 //natężenie światła otoczenia
+let I_P = 100.0 //natężenie światła źródła
 
 function initDrawer(canvas) {
     var c = drawer.canvas = canvas
@@ -70,7 +76,9 @@ function partOfBase(x, y) {
 }
 
 function getBaseColor(x, y, params, baseColor) {
-    return baseColor
+    let basePoint = projectionPlaneToYplane(x, y, CYLINDER_CENTER_Y + CYLINDER_HALFHEIGHT)
+    let i = phongEquation(params, I_A, I_P, [0, 1, 0], getProjectionVector(), basePoint)
+    return applyLightToColor(i, baseColor)
 }
 
 function projectionPlaneToYplane(x, y, planeY) { //oblicza wspolrzedne punktu powierzchni y=planeY, ktorego rzut jest w (x, y, 0)
@@ -109,7 +117,7 @@ function projectionPlaneToCylinderSide(x, y) {
 }
 
 function getSideColor(x, y, params, sideColor) {
-    return sideColor
+    return hslToString(sideColor)
 }
 
 function project(x, y, z) {
@@ -119,11 +127,8 @@ function project(x, y, z) {
     }
 }
 
-function dis(p1, p2) {
-    let x = p1.x - p2.x
-    let y = p1.y - p2.y
-    let z = p1.z - p2.z
-    return x*x + y*y + z*z
+function getProjectionVector() {  //wektor wzdłuż promieni rzutujących, skierowany do obserwatora (inaczej wektor V)
+    return normalizeVector([0, -PROJECTION_A, -1])
 }
 
 export var drawer = {
