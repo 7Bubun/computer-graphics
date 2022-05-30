@@ -1,4 +1,11 @@
-let CANVAS_SCALE = 2
+let CANVAS_SCALE = 2.0
+let CYLINDER_AXIS_X = 0.0 //wspolrzedne osi walca
+let CYLINDER_AXIS_Z = 2.0 //wspolrzedne osi walca
+let CYLINDER_RADIUS = 1.0
+let CYLINDER_HALFHEIGHT = 1.0 //polowa wysokosci walca
+let CYLINDER_CENTER_Y = 0.0 //wspolrzedna Y srodka walca
+
+let PROJECTION_A = -0.5 //wspolczynnik a rownania liniowego prostej rzutu ukosnego y = a*z + y_projekcji
 
 function initDrawer(canvas) {
     var c = drawer.canvas = canvas
@@ -21,20 +28,28 @@ function clearCanvas () {
 
 function drawCylinder(kA, kS, kD, n, sourceLocation, baseColor, sideColor) {
     clearCanvas()
+    let params = {kA, kS, kD, n, sourceLocation}
+    let colors = {baseColor, sideColor}
     
     for (let y=0; y<drawer.height; y++) {
         for (let x=0; x<drawer.width; x++) {
-            drawer.ctx.fillStyle = getCylinderColor(x, y)
+            drawer.ctx.fillStyle = getCylinderColor(x, y, params, colors)
             drawer.ctx.fillRect(x,y,1,1)
         }
     }
 }
 
-function getCylinderColor(x, y) {
+function getCylinderColor(x, y, params, colors) {
     let scaledCoords = scaleCoords(x,y)
     let xS = scaledCoords.x
     let yS = scaledCoords.y
-    return "black"
+    
+    if (partOfBase(xS, yS)) {
+        return getBaseColor(xS, yS, params, colors.baseColor)
+    } else if (partofSide(xS,yS)) {
+        return getSideColor(xS, yS, params, colors.sideColor)
+    } else
+        return "black"
 }
 
 function scaleCoords(x, y) {
@@ -44,6 +59,40 @@ function scaleCoords(x, y) {
         x: scaledX,
         y: scaledY
     }
+}
+
+function partOfBase(x, y) {
+    basePoint = projectionPlaneToYplane(x, y, CYLINDER_CENTER_Y + CYLINDER_HALFHEIGHT)
+    return dis(
+        {x: CYLINDER_AXIS_X, y: CYLINDER_CENTER_Y + CYLINDER_HALFHEIGHT, z:CYLINDER_AXIS_Z},
+        basePoint
+        ) <= CYLINDER_RADIUS
+}
+
+function projectionPlaneToYplane(x, y, planeY) { //przelicza wspolrzedne punktu powierzchni y=planeY, ktorego rzut jest w (x, y, 0)
+    return {
+        x,
+        y: planeY,
+        z: (planeY - y) / a
+    }
+}
+
+function partofSide(x, y) {
+    return false
+}
+
+function project(x, y, z) {
+    return {
+        x,
+        y: y-PROJECTION_A*z
+    }
+}
+
+function dis(p1, p2) {
+    let x = p1.x - p2.x
+    let y = p1.y - p2.y
+    let z = p1.z - p2.z
+    return x*x + y*y + z*z
 }
 
 export var drawer = {
