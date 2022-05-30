@@ -5,7 +5,7 @@ export function applyLightToColor(i, hslObject) {
 }
 
 function intensityToLightness(i) {
-    return Math.min(100, 10*Math.sqrt(i))
+    return Math.min(100, i)
 }
 
 export function hslToString(hslObject) {
