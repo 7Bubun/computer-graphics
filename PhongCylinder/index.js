@@ -11,16 +11,16 @@ let n = 100
 let sourceLocation = {
     "x": 1.0,
     "y": 2.2,
-    "z": 3.0
+    "z": -3.0
 }
 let baseColor = {
     "h": 60, //wartosc w stopniach 0 - 360
-    "s": 100, //%
+    "s": 55, //%
     "l": 50  //%
 } //kolor podstawy
 let sideColor = {
     "h": 120,
-    "s": 100,
+    "s": 55,
     "l": 50
 } //kolor ściany bocznej
 

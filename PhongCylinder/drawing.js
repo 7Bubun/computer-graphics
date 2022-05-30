@@ -10,7 +10,7 @@ let CYLINDER_CENTER_Y = -1.0 //wspolrzedna Y srodka walca
 
 let PROJECTION_A = -0.5 //wspolczynnik a rownania liniowego prostej rzutu ukosnego y = a*z + y_projekcji
 
-let I_A = 1.0 //natężenie światła otoczenia
+let I_A = 20.0 //natężenie światła otoczenia
 let I_P = 3000.0 //natężenie światła źródła
 
 function initDrawer(canvas) {
@@ -117,8 +117,10 @@ function projectionPlaneToCylinderSide(x, y) {
 }
 
 function getSideColor(x, y, params, sideColor) {
-    //TODO dla Kuby
-    return hslToString(sideColor)
+    let sidePoint = projectionPlaneToCylinderSide(x, y)
+    const vectorN = [sidePoint.x - CYLINDER_AXIS_X, 0, sidePoint.z - CYLINDER_AXIS_Z]
+    let i = phongEquation(params, I_A, I_P, vectorN, getProjectionVector(), sidePoint)
+    return applyLightToColor(i, sideColor)
 }
 
 function project(x, y, z) {
