@@ -3,7 +3,7 @@ let CYLINDER_AXIS_X = 0.0 //wspolrzedne osi walca
 let CYLINDER_AXIS_Z = 2.0 //wspolrzedne osi walca
 let CYLINDER_RADIUS = 1.0
 let CYLINDER_HALFHEIGHT = 1.0 //polowa wysokosci walca
-let CYLINDER_CENTER_Y = 0.0 //wspolrzedna Y srodka walca
+let CYLINDER_CENTER_Y = -1.0 //wspolrzedna Y srodka walca
 
 let PROJECTION_A = -0.5 //wspolczynnik a rownania liniowego prostej rzutu ukosnego y = a*z + y_projekcji
 
@@ -62,23 +62,54 @@ function scaleCoords(x, y) {
 }
 
 function partOfBase(x, y) {
-    basePoint = projectionPlaneToYplane(x, y, CYLINDER_CENTER_Y + CYLINDER_HALFHEIGHT)
+    let basePoint = projectionPlaneToYplane(x, y, CYLINDER_CENTER_Y + CYLINDER_HALFHEIGHT)
     return dis(
         {x: CYLINDER_AXIS_X, y: CYLINDER_CENTER_Y + CYLINDER_HALFHEIGHT, z:CYLINDER_AXIS_Z},
         basePoint
         ) <= CYLINDER_RADIUS
 }
 
-function projectionPlaneToYplane(x, y, planeY) { //przelicza wspolrzedne punktu powierzchni y=planeY, ktorego rzut jest w (x, y, 0)
+function getBaseColor(x, y, params, baseColor) {
+    return baseColor
+}
+
+function projectionPlaneToYplane(x, y, planeY) { //oblicza wspolrzedne punktu powierzchni y=planeY, ktorego rzut jest w (x, y, 0)
     return {
         x,
         y: planeY,
-        z: (planeY - y) / a
+        z: (planeY - y) / PROJECTION_A
     }
 }
 
 function partofSide(x, y) {
-    return false
+    let sidePoint = projectionPlaneToCylinderSide(x, y)
+    return sidePoint != null
+}
+
+function projectionPlaneToCylinderSide(x, y) {
+    let root = Math.sqrt(CYLINDER_RADIUS*CYLINDER_RADIUS - (x-CYLINDER_AXIS_X)*(x-CYLINDER_AXIS_X))
+    let z1 = CYLINDER_AXIS_Z - root //mniejsza wspolrzedna z, wiec blizej obserwatora
+    let z2 = CYLINDER_AXIS_Z + root
+    let y1 = PROJECTION_A*z1 + y
+    let y2 = PROJECTION_A*z2 + y
+    if (y1 >= CYLINDER_CENTER_Y - CYLINDER_HALFHEIGHT && y1 <= CYLINDER_CENTER_Y + CYLINDER_HALFHEIGHT)
+        return {
+            x,
+            y: y1,
+            z: z1
+        }
+    else if (y2 >= CYLINDER_CENTER_Y - CYLINDER_HALFHEIGHT && y2 <= CYLINDER_CENTER_Y + CYLINDER_HALFHEIGHT)
+        return {
+            x,
+            y: y2,
+            z: z2
+        }
+    else
+        return null
+}
+
+function getSideColor(x, y, params, sideColor) {
+    return sideColor
 }
 
 function project(x, y, z) {
