@@ -4,17 +4,17 @@ let canvas = document.getElementById("canvas");
 
 drawer.initDrawer(canvas);
 
-let kA = 0.1
-let kS = 0.75
-let kD = 0.25
-let n = 100
+let kA = 0.8
+let kS = 0.55
+let kD = 0.05
+let n = 2
 let sourceLocation = {
-    "x": 1.0,
-    "y": 2.0,
-    "z": -3.0
+    "x": 3.0,
+    "y": 3.0,
+    "z": -2.5
 }
 let baseColor = {
-    "h": 60, //wartosc w stopniach 0 - 360
+    "h": 120, //wartosc w stopniach 0 - 360
     "s": 55, //%
     "l": 50  //%
 } //kolor podstawy

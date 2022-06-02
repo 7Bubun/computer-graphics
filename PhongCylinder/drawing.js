@@ -1,5 +1,5 @@
 import { normalizeVector, dis, phongEquation } from "./calculation.js"
-import { applyLightToColor, hslToString } from "./color.js"
+import { applyLightToColor } from "./color.js"
 
 let CANVAS_SCALE = 2.0
 let CYLINDER_AXIS_X = 0.0 //wspolrzedne osi walca
@@ -10,8 +10,8 @@ let CYLINDER_CENTER_Y = -1.0 //wspolrzedna Y srodka walca
 
 let PROJECTION_A = -0.5 //wspolczynnik a rownania liniowego prostej rzutu ukosnego y = a*z + y_projekcji
 
-let I_A = 20.0 //natężenie światła otoczenia
-let I_P = 3000.0 //natężenie światła źródła
+let I_A = 10.0 //natężenie światła otoczenia
+let I_P = 7000.0 //natężenie światła źródła
 
 function initDrawer(canvas) {
     var c = drawer.canvas = canvas
@@ -25,7 +25,7 @@ function initDrawer(canvas) {
     clearCanvas()
 }
 
-function clearCanvas () {
+function clearCanvas() {
     var c = drawer.canvas
     var ctx = drawer.ctx
     ctx.fillStyle = "black"
@@ -34,25 +34,25 @@ function clearCanvas () {
 
 function drawCylinder(kA, kS, kD, n, sourceLocation, baseColor, sideColor) {
     clearCanvas()
-    let params = {kA, kS, kD, n, sourceLocation}
-    let colors = {baseColor, sideColor}
-    
-    for (let y=0; y<drawer.height; y++) {
-        for (let x=0; x<drawer.width; x++) {
+    let params = { kA, kS, kD, n, sourceLocation }
+    let colors = { baseColor, sideColor }
+
+    for (let y = 0; y < drawer.height; y++) {
+        for (let x = 0; x < drawer.width; x++) {
             drawer.ctx.fillStyle = getCylinderColor(x, y, params, colors)
-            drawer.ctx.fillRect(x,y,1,1)
+            drawer.ctx.fillRect(x, y, 1, 1)
         }
     }
 }
 
 function getCylinderColor(x, y, params, colors) {
-    let scaledCoords = scaleCoords(x,y)
+    let scaledCoords = scaleCoords(x, y)
     let xS = scaledCoords.x
     let yS = scaledCoords.y
-    
+
     if (partOfBase(xS, yS)) {
         return getBaseColor(xS, yS, params, colors.baseColor)
-    } else if (partofSide(xS,yS)) {
+    } else if (partofSide(xS, yS)) {
         return getSideColor(xS, yS, params, colors.sideColor)
     } else
         return "black"
@@ -70,14 +70,14 @@ function scaleCoords(x, y) {
 function partOfBase(x, y) {
     let basePoint = projectionPlaneToYplane(x, y, CYLINDER_CENTER_Y + CYLINDER_HALFHEIGHT)
     return dis(
-        {x: CYLINDER_AXIS_X, y: CYLINDER_CENTER_Y + CYLINDER_HALFHEIGHT, z:CYLINDER_AXIS_Z},
+        { x: CYLINDER_AXIS_X, y: CYLINDER_CENTER_Y + CYLINDER_HALFHEIGHT, z: CYLINDER_AXIS_Z },
         basePoint
-        ) <= CYLINDER_RADIUS
+    ) <= CYLINDER_RADIUS
 }
 
 function getBaseColor(x, y, params, baseColor) {
     let basePoint = projectionPlaneToYplane(x, y, CYLINDER_CENTER_Y + CYLINDER_HALFHEIGHT)
-    let i = phongEquation(params, I_A, I_P, [0, 1, 0], getProjectionVector(), basePoint)
+    let i = phongEquation(params, I_A, I_P, [0, 1, 0], getProjectionVector(), basePoint, true)
     return applyLightToColor(i, baseColor)
 }
 
@@ -95,11 +95,11 @@ function partofSide(x, y) {
 }
 
 function projectionPlaneToCylinderSide(x, y) {
-    let root = Math.sqrt(CYLINDER_RADIUS*CYLINDER_RADIUS - (x-CYLINDER_AXIS_X)*(x-CYLINDER_AXIS_X))
+    let root = Math.sqrt(CYLINDER_RADIUS * CYLINDER_RADIUS - (x - CYLINDER_AXIS_X) * (x - CYLINDER_AXIS_X))
     let z1 = CYLINDER_AXIS_Z - root //mniejsza wspolrzedna z, wiec blizej obserwatora
     let z2 = CYLINDER_AXIS_Z + root
-    let y1 = PROJECTION_A*z1 + y
-    let y2 = PROJECTION_A*z2 + y
+    let y1 = PROJECTION_A * z1 + y
+    let y2 = PROJECTION_A * z2 + y
     if (y1 >= CYLINDER_CENTER_Y - CYLINDER_HALFHEIGHT && y1 <= CYLINDER_CENTER_Y + CYLINDER_HALFHEIGHT)
         return {
             x,
@@ -119,14 +119,14 @@ function projectionPlaneToCylinderSide(x, y) {
 function getSideColor(x, y, params, sideColor) {
     let sidePoint = projectionPlaneToCylinderSide(x, y)
     const vectorN = [sidePoint.x - CYLINDER_AXIS_X, 0, sidePoint.z - CYLINDER_AXIS_Z]
-    let i = phongEquation(params, I_A, I_P, vectorN, getProjectionVector(), sidePoint)
+    let i = phongEquation(params, I_A, I_P, vectorN, getProjectionVector(), sidePoint, false)
     return applyLightToColor(i, sideColor)
 }
 
 function project(x, y, z) {
     return {
         x,
-        y: y-PROJECTION_A*z
+        y: y - PROJECTION_A * z
     }
 }
 
@@ -137,11 +137,11 @@ function getProjectionVector() {  //wektor wzdłuż promieni rzutujących, skier
 export var drawer = {
     initDrawer: initDrawer,
     drawCylinder: drawCylinder,
-    canvas : null,
-    width : 0.0,
-    height : 0.0,
-    ctx : null,
-    xcenter : 0.0,
-    ycenter : 0.0,
-    scale : 0.0
+    canvas: null,
+    width: 0.0,
+    height: 0.0,
+    ctx: null,
+    xcenter: 0.0,
+    ycenter: 0.0,
+    scale: 0.0
 }
