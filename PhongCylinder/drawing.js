@@ -119,7 +119,7 @@ function projectionPlaneToCylinderSide(x, y) {
 function getSideColor(x, y, params, sideColor) {
     let sidePoint = projectionPlaneToCylinderSide(x, y)
     const vectorN = [sidePoint.x - CYLINDER_AXIS_X, 0, sidePoint.z - CYLINDER_AXIS_Z]
-    let i = phongEquation(params, I_A, I_P, vectorN, getProjectionVector(), sidePoint, false)
+    let i = phongEquation(params, I_A, I_P, normalizeVector(vectorN), getProjectionVector(), sidePoint, false)
     return applyLightToColor(i, sideColor)
 }
 

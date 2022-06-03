@@ -50,7 +50,8 @@ function angleBetweenVectors(v1, v2) {
     if (cosValue < 0) {
         return Math.acos(cosValue)
 
-    } else {
+    } 
+    else {
         return Math.PI / 2
     }
 }
